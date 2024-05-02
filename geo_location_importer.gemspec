@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'benchmark', '~> 0.3.0'
   spec.add_dependency 'parallel', '~> 1.11', '>= 1.11.2'
   spec.add_dependency 'smarter_csv', '~> 1.10', '>= 1.10.3'
+  spec.add_dependency 'ipaddress', '~> 0.8.3'
 
   spec.add_development_dependency 'rspec', '~> 3.13'
   spec.add_development_dependency 'rubocop', '~> 1.63', '>= 1.63.4'

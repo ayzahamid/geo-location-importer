@@ -3,6 +3,7 @@
 require 'smarter_csv'
 require 'parallel'
 require 'activerecord-import'
+require 'ipaddress'
 require 'geo_location_importer/models/location'
 
 module GeoLocationImporter
