@@ -5,7 +5,7 @@
 # Overview
 This gem empowers seamless geolocation data import from CSV files, leveraging parallel processing for expedited execution. Effortlessly handles large datasets.
 
-# Benchmark
+# Benchmarks
 
 Importing 1 Million record to database in 1 minute and 30 seconds
 
@@ -63,3 +63,27 @@ Example usage
 file_path = "#{Rails.public_path}/csv/example.csv"
 GeoLocationImporter::ImportCsv.call(file_path)
 ```
+
+# Local Setup
+
+To contribute, follow these steps:
+
+* Clone the repository to your local machine.
+* Run the following command to set up all the development dependencies:
+```
+    bundle install
+```
+
+# Test Suite
+
+Create a test db manually in postgresql for running the test cases using the following command
+```
+ create database test;
+```
+
+After setting up locally, run the test suite using the following command:
+
+```
+    rspec .
+```
+Make sure all tests pass before submitting your contributions.
