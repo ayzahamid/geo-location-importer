@@ -25,4 +25,8 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'rspec', '~> 3.13'
   spec.add_development_dependency 'rubocop', '~> 1.63', '>= 1.63.4'
+  spec.add_development_dependency 'factory_bot', '~> 6.4', '>= 6.4.6'
+  spec.add_development_dependency 'faker', '~> 3.3', '>= 3.3.1'
+  spec.add_development_dependency 'pg', '~> 1.5', '>= 1.5.5'
+  spec.add_development_dependency 'debug', '~> 1.9', '>= 1.9.2'
 end

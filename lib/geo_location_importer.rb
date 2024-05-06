@@ -12,7 +12,7 @@ module GeoLocationImporter
 
     def initialize(file, opts = {})
       @file = file
-      @headers = opts[:headers] || {}
+      @opts = opts
     end
 
     def import
@@ -39,6 +39,8 @@ module GeoLocationImporter
 
       puts "Total accepted records: #{total_accepted_count}"
       puts "Total rejected records: #{total_rejected_count}"
+
+      :ok
     end
 
     class << self
@@ -61,10 +63,13 @@ module GeoLocationImporter
     end
 
     def custom_headers
-      return {} if @headers.empty?
+      return {} if @opts.empty?
 
-      raise StandardError, 'Header must be hash' unless headers.is_a?(Array)
+      raise StandardError, 'Options must be hash, please pass {headers: []}' if @opts.is_a?(Array)
 
+      return {} unless @opts[:headers].present?
+
+      @headers = @opts[:headers]
       {
         headers_in_file: false,
         user_provided_headers: @headers
