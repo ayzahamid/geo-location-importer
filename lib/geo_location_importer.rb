@@ -25,9 +25,20 @@ module GeoLocationImporter
 
       chunks = SmarterCSV.process(@file, options)
 
-      Parallel.map(chunks, progress: 'Starting Import', in_processes: 5) do |chunk|
-        worker(chunk)
+      total_accepted_count = 0
+      total_rejected_count = 0
+      mutex = Mutex.new
+
+      Parallel.map(chunks, progress: 'Starting Import', in_threads: 5) do |chunk|
+        accepted_count, rejected_count = worker(chunk)
+        mutex.synchronize do
+          total_accepted_count += accepted_count
+          total_rejected_count += rejected_count
+        end
       end
+
+      puts "Total accepted records: #{total_accepted_count}"
+      puts "Total rejected records: #{total_rejected_count}"
     end
 
     class << self
@@ -41,9 +52,12 @@ module GeoLocationImporter
     def worker(array_of_hashes)
       ActiveRecord::Base.connection.reconnect!
 
-      filtered_array = array_of_hashes.select { |location| IPAddress.valid? location[:ip_address] }
+      accepted_records = array_of_hashes.select { |location| IPAddress.valid?(location[:ip_address]) }
+      rejected_records_count = array_of_hashes.count - accepted_records.count
 
-      Location.import(filtered_array)
+      Location.import(accepted_records)
+
+      [accepted_records.count, rejected_records_count]
     end
 
     def custom_headers
